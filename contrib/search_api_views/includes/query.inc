@@ -110,6 +110,32 @@ class SearchApiViewsQuery extends views_plugin_query {
   }
 
   /**
+   * Add a field to the query table, possibly with an alias. This will
+   * automatically call ensure_table to make sure the required table
+   * exists, *unless* $table is unset.
+   *
+   * @param $table
+   *   The table this field is attached to. If NULL, it is assumed this will
+   *   be a formula; otherwise, ensure_table is used to make sure the
+   *   table exists.
+   * @param $field
+   *   The name of the field to add. This may be a real field or a formula.
+   * @param $alias
+   *   The alias to create. If not specified, the alias will be $table_$field
+   *   unless $table is NULL. When adding formulae, it is recommended that an
+   *   alias be used.
+   * @param $params
+   *   An array of parameters additional to the field that will control items
+   *   such as aggregation functions and DISTINCT.
+   *
+   * @return $name
+   *   The name that this field can be referred to as. Usually this is the alias.
+   */
+  function add_field($table, $field, $alias = '', $params = array()) {
+    return $this->addField($field);
+  }
+
+  /**
    * Add a sort to the query.
    *
    * @param $selector
