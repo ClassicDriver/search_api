@@ -776,6 +776,12 @@ class SearchApiQuery implements SearchApiQueryInterface {
     }
   }
 
+  /**
+   * Implements the magic __clone() method to clone the filter, too.
+   */
+  public function __clone() {
+    $this->filter = clone $this->filter;
+  }
 }
 
 /**
