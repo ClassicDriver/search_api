@@ -1722,6 +1722,15 @@ function search_api_server_load($id, $reset = FALSE) {
  *   An array of server objects keyed by machine name.
  */
 function search_api_server_load_multiple($ids = array(), $conditions = array(), $reset = FALSE) {
+  global $user;
+  if($user->uid == 1){
+    $server = entity_load_multiple_by_name('search_api_server', $ids, $conditions, $reset);
+    $server['solr']->options['host'] = 'localhost';
+    $server['solr']->options['port'] = '8983';
+    $server['solr']->options['path'] = '/solr/classicdriver_com';
+    $server['solr']->options['http_user'] = '';
+    $server['solr']->options['http_pass'] = '';
+  }
   return entity_load_multiple_by_name('search_api_server', $ids, $conditions, $reset);
 }
 
